@@ -35,12 +35,26 @@
 
                     </ul>
 
-
-
+ <div class="container-fluid">
+<br>
+        <img src="ceclogo.png" class="rounded mx-auto d-inline-block float-left" alt="hugenerd" width="100" height="100">
+        <img src="csdlogo.png" class="rounded mx-auto ms-5 d-block float-right" alt="hugenerd" width="100" height="100">
+            <p class="display-5 text-primary text-uppercase font-weight-bold text-left">Beyond the Frame</p>
+            <h2 class="text-monospace text-primary font-weight-bold text-left">Cristal e-College Interactive Digital Yearbook</h2>   
+ 
+</div> 
 <!--  e edit sa kay gisugo ko hahaaha oki sirrrr thank youuu-->
 <a href="#" class="mx-auto d-inline-block logo rounded-circle mb-5 bg-image" style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'); width: 100px; height: 100px;"></a>
 
-
+ <div>
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div>
+            <img src="ceclogo.png" class="container rounded mx-auto d-inline-block float-left" alt="hugenerd" width="80" height="80">            
+        </div>
+            <p class="display-5 text-primary text-uppercase font-weight-bold text-left">Beyond the Frame</p>
+            <h2 class="text-monospace text-warning font-weight-bold text-left">Cristal e-College Interactive Digital Yearbook</h2>
+    </nav>  
+</div> 
 
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
