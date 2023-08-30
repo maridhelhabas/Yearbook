@@ -15,7 +15,7 @@ use App\Http\Controllers\loginController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('yearbook_pages.userlogin');
 });
 Route::get('/admin-login', function () {
     return view('yearbook_pages.index');
@@ -25,10 +25,6 @@ Route::post('/admin-login',[loginController::class, 'login']);
 Route::get('/staff-login', function () {
     return view('yearbook_pages.index');
 });
-
-Route::get('/home', function () {
-    return view('yearbook_pages.home');
-})->name('home');
 
 Route::get('/dashboard', function () {
     return view('yearbook_pages.dashboard');

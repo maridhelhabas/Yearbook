@@ -7,10 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Yearbook Index') }}</title>
+    <title>{{ config('app.name', 'User Login') }}</title>
 
     <!-- Fonts -->
-    <link rel="icon" href="{{asset('profile.png')}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('student.png')}}" type="image/x-icon">
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -48,21 +48,23 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <div class="border-primary bg-white card mt-6 ">
-                <img class="rounded-circle float-center mx-auto mt-5" src="{{ asset('profile.png')}}" width="150px"  height="150px"/>
-                <h2 class="text-primary font-weight-bolder card-title mx-auto mt-1"><b>LOGIN<b></h2>
+            <div class="border-primary bg-white card mt-4">
+                <img class="rounded-circle float-center mx-auto mt-5" src="{{ asset('student_icon.png')}}" width="150px"  height="150px"/>
+                <h2 class="text-dark font-weight-bolder card-title mx-auto mt-1"><b>LOGIN</b></h2>
+                <p class="fs-10 text-center">Two-Factor Authentication</p>
+                <p class="fs-10 text-center">Enter student ID to login.</p>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="row mb-3">
-                            <label for="username" class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
+                        <div class="row mb-5">
+                            <label for="studentid" class="col-md-4 col-form-label text-md-end"><b>{{ __('Student ID') }}</b></label>
 
                             <div class="col-md-6">
-                                <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="studentid" type="studentid" class="form-control @error('studentid') is-invalid @enderror" name="id" value="{{ old('id') }}" required autocomplete="id" autofocus>
 
-                                @error('username')
+                                @error('studentid')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -70,55 +72,21 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="row mb-4">
                             <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary" style="float:right;">
-                                    {{ __('Login') }}
+                            <button type="submit" class="btn btn-primary btn-lg" style="float:right;">
+                                    {{ __('Submit') }}
                                 </button>
                             </div>
                         </div>
 
-                        <div class="row mb-4">
-                            <div class="col-md-8 offset-md-2 ms-6">
-
-                                @if (Route::has('password.request'))
-                                <li class="nav-item text-center" style="list-style-type: none;">
-                                    Forgot
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Username/Password?') }}</a>
-                                </li>
-                                <li class="nav-item text-center" style="list-style-type: none;">
-                                    Don't have an account?
-                                    <a class="btn btn-link" href="{{ route('register') }}">{{ __('Sign up') }}</a>
-                                </li>
-                                @endif
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    $(function() {
-        $('#password').password()
-    })
-</script>
     
 </body>
 </html>
