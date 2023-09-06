@@ -27,11 +27,11 @@
                                     <a href="{{ route('dashboard') }}" class="text-start nav-link text-white btn btn-outline-warning  align-center"><i class="fa-solid fa-chart-area" style="color: #ffffff;"></i> Dashboard</a>
                                 </li>
                                 <hr>
-                                <li class="nav-item {{ request()->is('registration*') ? 'active' : '' }}" id="registration">
-                                    <li id="toggleTitle" class="text-white btn nav-link btn-outline-warning text-start dropdown-toggle" ><i class="fa-solid fa-address-card"></i> &nbsp;Registration </li>
-                                    <li class="projects projectsClass"><a href="{{ route('staff') }}" class="p3 text-start nav-link text-white btn btn-outline-info px-4 "><i class="fa-solid fa-user-group"></i> &nbsp;Staff</a></li>
+
+                                    <li id="toggleTitle"  class=" text-white btn nav-link btn-outline-warning text-start dropdown-toggle" ><i class="fa-solid fa-address-card"></i> &nbsp;Registration </li>
+                                    <li class=" projects  {{ request()->is('registration*') ? 'active' : '' }} projectsClass" id="registration"><a href="{{ route('staff') }}" class=" p3 text-start nav-link text-white btn btn-outline-info px-4 "><i class="fa-solid fa-user-group"></i> &nbsp;Staff</a></li>
                                     <li class="projects projectsClass"><a href="{{ route('alumni') }}" class="p3 text-start nav-link text-white btn btn-outline-info px-4"><i class="fa-solid fa-user-group"></i> &nbsp; Alumnus</a></li>
-                                </li>
+                           
 
                                 <hr>
                                 <!-- <li class="nav-item {{ request()->is('yearbook*') ? 'active' : '' }}" id="yearbook">
@@ -150,7 +150,7 @@
         // Function to handle navigation item clicks
             function handleNavigationItemClick(event) {
                 // Remove the 'active' class from all navigation items
-                const navItems = document.querySelectorAll('.nav-item');
+                const navItems = document.querySelectorAll('.nav-item', 'projects');
                 navItems.forEach((item) => {
                     item.classList.remove('active');
                 });
