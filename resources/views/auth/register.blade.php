@@ -8,16 +8,66 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
+                        <div class="row  mx-auto">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-6 mb-3">
+                                <img id="image_preview" src="{{ asset('assets/image/user_thumbnail.png')}}" alt="Image Preview" style="border-radius:100px;max-width: 200px; max-height: 200px;">
+                            </div>
+                        </div>
+
+                <div class="row mb-3">
+                    <label for="user_image" class="col-md-4 col-form-label text-md-end">{{ __('User Image') }}</label>
+                    <div class="col-md-6">
+                            <input id="user_image" type="file" style="display: none;" class="form-control @error('user_image') is-invalid @enderror" name="user_image" accept="image/*" required>
+                            <input type="text" id="user_image_fake_input" class="form-control" placeholder="Select Image" readonly style="display:none">
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('user_image').click();">Upload Image</button>
+                        @error('user_image')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __(' First Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
 
-                                @error('name')
+                                @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="last_name" class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+
+                                @error('last_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="phone_number" class="col-md-4 col-form-label text-md-end">{{ __('Phone Number') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone_number" type="number" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="phone_number" autofocus>
+
+                                @error('phone_number')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -32,6 +82,20 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="roles" class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="roles" type="text" class="form-control @error('roles') is-invalid @enderror" name="roles" value="{{ old('roles') }}" required autocomplete="roles" autofocus>
+
+                                @error('roles')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -74,4 +138,25 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    // JavaScript to update the image preview when the file input changes
+    document.getElementById('user_image').addEventListener('change', function () {
+        const fileInput = this;
+        const imagePreview = document.getElementById('image_preview');
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            imagePreview.src = ''; // Clear the preview if no file is selected
+        }
+    });
+</script>
 @endsection
