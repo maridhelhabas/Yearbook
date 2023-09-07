@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\yearbookController;
-
+use App\Http\Controllers\StaffRegistrationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -67,6 +67,8 @@ Route::post('/update', [yearbookController::class, 'update'])->name('update');
 
 
 
+
+
 Route::resource('login', loginController::class);
 
 Route::get('login', function () {
@@ -79,10 +81,13 @@ Route::get('/logout', function () {
 
 
 
-
+// Route::post('/staff/register', [StaffRegistrationController::class, 'create'])->name('staff.register');
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
 

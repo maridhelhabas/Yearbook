@@ -63,15 +63,12 @@
                                 <label for="email">{{ __('Username or email address') }}</label>      
                         </div>
 
-                        <div class="form-floating mb-2 col-md-9 mx-auto mt-4 ">
-                                <input type="password"  id="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Enter Password">
-                                    <label for="password" >{{ __('Password') }} </label>
-                                    <span id="password1"><i class="fas fa-eye" id="eye-icon"></i></span>
-                                <!-- @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror -->
+                       <div class="form-floating mb-2 col-md-9 mx-auto mt-4">
+                            <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Enter Password">
+                            <label for="password">{{ __('Password') }}</label>
+                            <span id="password1" onclick="togglePasswordVisibility()">
+                                <i class="fas fa-eye" id="eye-icon"></i>
+                            </span>
                         </div>
 
                         <br>
@@ -114,7 +111,22 @@
     </div>
 </footer> 
 
-<script src="{{ asset('assets/js/passwordshowandhide.js') }}"></script>
+<script>
+        function togglePasswordVisibility() {
+    var passwordInput = document.getElementById('password');
+    var eyeIcon = document.getElementById('eye-icon');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+    }
+}
+</script>
 </body>
 </html>
 

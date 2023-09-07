@@ -9,12 +9,16 @@
                             <li class="mx-auto justify-content-center align-items-center mt-2">
                             
                                 @php
-                                $user = auth()->user();
+                                    $user = auth()->user();
                                 @endphp
 
                                 @if ($isAdmin && $user->user_image)
-                                    <img src="{{ asset('assets/uploaded_image/'. $user->user_image) }}" alt="User Picture" class="rounded-circle mx-auto ms-2 d-block" width="100" height="100">
-                                    @endif
+                                    <img src="{{ asset('assets/uploaded_image/' . $user->user_image) }}" alt="Admin Picture" class="rounded-circle mx-auto ms-2 d-block" width="100" height="100">
+                                @elseif ($isStaff && $user->user_image)
+                                    <img src="{{ asset('assets/uploaded_image/' . $user->user_image) }}" alt="Staff Picture" class="rounded-circle mx-auto ms-2 d-block" width="100" height="100">
+                                @endif
+
+
                             </li>
 
                             <div class="col mx-auto d-flex justify-content-center align-items-center mt-3">

@@ -32,7 +32,7 @@
         <div class="col-lg-2 col-xl-8" style=" position: fixed; width:80%; height: 50%; margin-top: 28%;margin-left: 250px;margin-right: 10px;">
           <div class="card shadow">
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
-              <h3 class="text-primary">STAFF</h3>
+              <h3 class="text-primary">Registration/Staff</h3>
               <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#addstaffModal"><i
                   class="fa fa-circle-plus"></i> Create Account</button>
             </div>
@@ -199,7 +199,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="#" method="POST" id="add_staff_form" enctype="multipart/form-data">
+      <!-- <form action="{{ route('register') }}" method="POST" id="add_staff_form" enctype="multipart/form-data">
         @csrf
         <div class="modal-body dash-blade p-4 bg-light">
           <div class="row">
@@ -222,18 +222,28 @@
               </div>
             </div>
             <div class="col-lg">
-              <label for="staff_firstname" class="text-dark">{{ __('First Name') }}<span class="text-danger">*</span></label>
-              <input type="text" name="staff_firstname" class="form-control form-control2 @error('staff_firstname') is-invalid @enderror" placeholder="firstname" value="{{ old('staff_firstname') }}" required>
-              @error('staff_firstname')
+              <label for="first_name" class="text-dark">{{ __('First Name') }}<span class="text-danger">*</span></label>
+              <input type="text" name="first_name" class="form-control form-control2 @error('first_name') is-invalid @enderror" placeholder="firstname" value="{{ old('first_name') }}" required>
+              @error('first_name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
+
+            <div class="col-lg" style="display:none">
+              <label for="roles" class="text-dark">{{ __('Role') }}<span class="text-danger">*</span></label>
+              <input type="text" name="roles" class="form-control form-control2 @error('roles') is-invalid @enderror" placeholder="role" value="Staff" required>
+              @error('role')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
               @enderror
             </div>
             <div class="col-lg">
-              <label for="staff_lastname" class="text-dark">{{ __('Last Name') }}<span class="text-danger">*</span></label>
-              <input type="text" name="staff_lastname" class="form-control form-control2 @error('staff_lastname') is-invalid @enderror" placeholder="lastname" value="{{ old('staff_lastname') }}" required>
-              @error('staff_firstname')
+              <label for="last_name" class="text-dark">{{ __('Last Name') }}<span class="text-danger">*</span></label>
+              <input type="text" name="last_name" class="form-control form-control2 @error('last_name') is-invalid @enderror" placeholder="lastname" value="{{ old('last_name') }}" required>
+              @error('last_name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -241,30 +251,46 @@
             </div>
           </div>
           <div class="my-2">
-            <label for="staff_phone_number" class="text-dark">{{ __('Phone Number') }} <span class="text-danger">*</span></label>
-            <input type="number" min="0" max="11" name="staff_phone_number" class="form-control form-control2 @error('staff_phone_number') is-invalid @enderror" placeholder="phone number" required>
+            <label for="phone_number" class="text-dark">{{ __('Phone Number') }} <span class="text-danger">*</span></label>
+            <input type="number"  name="phone_number" class="form-control form-control2 @error('phone_number') is-invalid @enderror" placeholder="phone number" required>
+            @error('phone_number')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
           </div>
           <div class="my-2">
             <label for="email" class="text-dark">{{ __('Email Address') }} <span class="text-danger">*</span></label>
-            <input type="email" name="email_address" class="form-control form-control2" placeholder="email" required>
+            <input type="email" name="email" class="form-control form-control2" placeholder="email" required>
+            @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
           </div>
       
           <div class="my-2 position-relative">
-            <label for="password" class="text-dark">{{ __('Password') }}</label>
+            <label for="password" class="text-dark">{{ __('Password') }} <span class="text-danger">*</span></label>
             <div class="d-flex align-items-center">
-                <input type="password" id="password" class="form-control form-control2 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Enter Password">
+                <input type="password" id="password" class="form-control form-control2 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="password">
                 <span id="password1" class="position-absolute end-0 top translate-middle-y" style="margin-top:25px;margin-right:10px"><i class="fas fa-eye" id="eye-icon"></i></span>
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
             </div>
           </div>
 
 
         </div>
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-          <button type="submit" id="add_staff_btn" class="btn btn-primary d-grip gap-2" style="width: 30%; border-color:white">Add Staff</button>
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
+          <button type="submit"  class="btn btn-primary d-grip gap-2" style="width: 30%; border-color:white">Add Staff</button>
 
         </div>
-      </form>
+      </form> -->
+      @yield('content')
     </div>
   </div>
 </div>
