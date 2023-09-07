@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     
  </head>
@@ -25,22 +26,23 @@
   
         </div>
     </div>
-  <div class="container">
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-lg-2 col-xl-8" style=" position: fixed; height: 50%; margin-top: 550px;margin-left: 250px;margin-right: 10px;">
-        <div class="card shadow">
-          <div class="card-header bg-white d-flex justify-content-between align-items-center">
-            <h3 class="text-primary">STAFF</h3>
-            <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#addstaffModal"><i
-                class="bi-plus-circle me-2"></i>Create Account</button>
-          </div>
-          <div class="card-body" id="show_all_staff">
-            <h1 class="text-center text-secondary my-5">Loading...</h1>
+
+    <div class="content">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-lg-2 col-xl-8" style=" position: fixed; width:80%; height: 50%; margin-top: 28%;margin-left: 250px;margin-right: 10px;">
+          <div class="card shadow">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+              <h3 class="text-primary">STAFF</h3>
+              <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#addstaffModal"><i
+                  class="fa fa-circle-plus"></i> Create Account</button>
+            </div>
+            <div class="card-body" id="show_all_staff">
+              <h1 class="text-center text-secondary my-5">Loading...</h1>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js'></script>
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.10.25/datatables.min.js"></script>
@@ -184,58 +186,83 @@
         }
       });
     </script>  -->
-   
-</body>
-   
-</html>
 
 
-
-<!-- THIS IS THE MODAL AREA -->
+    <!-- THIS IS THE MODAL AREA -->
 
     {{-- add new employee modal start --}}
-<div class="modal fade" id="addstaffModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade " id="addstaffModal" tabindex="-1" aria-labelledby="exampleModalLabel"
   data-bs-backdrop="static" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content dash-blade">
+      <div class="modal-header dash-blade">
         <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="#" method="POST" id="add_staff_form" enctype="multipart/form-data">
         @csrf
-        <div class="modal-body p-4 bg-light">
+        <div class="modal-body dash-blade p-4 bg-light">
           <div class="row">
-            <div class="col-lg">
-              <label for="fname">First Name</label>
-              <input type="text" name="fname" class="form-control" placeholder="firstname" required>
+            <div class="my-2">
+                <div class="text-center mb-2">
+                    <img id="image_preview" src="{{ asset('assets/image/user_thumbnail.png')}}" alt="Image Preview" style="border-radius:150px;max-width: 150px; max-height: 150px;">
+                </div>
+             
+                <div class="row mb-3">
+                    <div class="col text-center">
+                            <input id="user_image" type="file" style="display: none;" class="form-control @error('user_image') is-invalid @enderror" name="user_image" accept="image/*" required>
+                            <input type="text" id="user_image_fake_input" class="form-control form-control2" placeholder="Select Image" readonly style="display:none">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('user_image').click();">Upload Image</button>
+                        @error('user_image')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+              </div>
             </div>
             <div class="col-lg">
-              <label for="lname">Last Name</label>
-              <input type="text" name="lname" class="form-control" placeholder="lastname" required>
+              <label for="staff_firstname" class="text-dark">{{ __('First Name') }}<span class="text-danger">*</span></label>
+              <input type="text" name="staff_firstname" class="form-control form-control2 @error('staff_firstname') is-invalid @enderror" placeholder="firstname" value="{{ old('staff_firstname') }}" required>
+              @error('staff_firstname')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
+            <div class="col-lg">
+              <label for="staff_lastname" class="text-dark">{{ __('Last Name') }}<span class="text-danger">*</span></label>
+              <input type="text" name="staff_lastname" class="form-control form-control2 @error('staff_lastname') is-invalid @enderror" placeholder="lastname" value="{{ old('staff_lastname') }}" required>
+              @error('staff_firstname')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
             </div>
           </div>
           <div class="my-2">
-            <label for="phone">Phone Number</label>
-            <input type="tel" name="phone_number" class="form-control" placeholder="phone number" required>
+            <label for="staff_phone_number" class="text-dark">{{ __('Phone Number') }} <span class="text-danger">*</span></label>
+            <input type="number" min="0" max="11" name="staff_phone_number" class="form-control form-control2 @error('staff_phone_number') is-invalid @enderror" placeholder="phone number" required>
           </div>
           <div class="my-2">
-            <label for="email">Email Address</label>
-            <input type="email" name="email_address" class="form-control" placeholder="email" required>
+            <label for="email" class="text-dark">{{ __('Email Address') }} <span class="text-danger">*</span></label>
+            <input type="email" name="email_address" class="form-control form-control2" placeholder="email" required>
           </div>
       
-          <div class="my-2">
-            <label for="post">Password</label>
-            <input type="password" name="password" class="form-control" placeholder="password" required>
+          <div class="my-2 position-relative">
+            <label for="password" class="text-dark">{{ __('Password') }}</label>
+            <div class="d-flex align-items-center">
+                <input type="password" id="password" class="form-control form-control2 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Enter Password">
+                <span id="password1" class="position-absolute end-0 top translate-middle-y" style="margin-top:25px;margin-right:10px"><i class="fas fa-eye" id="eye-icon"></i></span>
+            </div>
           </div>
-          <div class="my-2">
-            <label for="profile">Select Profile</label>
-            <input type="file" name="profile" class="form-control" required>
-          </div>
+
+
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" id="add_staff_btn" class="btn btn-primary">Add Staff</button>
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <button type="submit" id="add_staff_btn" class="btn btn-primary d-grip gap-2" style="width: 30%; border-color:white">Add Staff</button>
+
         </div>
       </form>
     </div>
@@ -296,3 +323,13 @@
   </div>
 </div>
 {{-- edit staff modal end --}}
+
+<script src="{{ asset('assets/js/passwordshowandhide.js') }}"></script>
+<script src="{{ asset('assets/js/imagePreview.js') }}"></script>
+
+</body>
+   
+</html>
+
+
+

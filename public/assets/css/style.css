@@ -1,21 +1,3 @@
-
-    /* .active{
-        background-color: orange;
-        border-radius: 5px;
-        length: 20;
-    
-    .register {
-        height: 50%;
-        margin-left: 250px;
-        margin-right: 10px;                
-    } */
-    /* #grad1 {
-        height: auto;
-        background-image: linear-gradient(#FFFAF0, #1E90FF);
-        background-size: 100%;
-        background-position: fixed;     
-    }   
-*/
         .nav1 {        
         position:fixed;
         background-color: blue; 
@@ -69,6 +51,22 @@
         }
         .form-control{
             color: green;
+            font-family: arial;
+        }
+
+        .form-control2:focus {
+            border-color: transparent !important;
+            -webkit-text-shadow: none !important;
+            box-shadow: none !important;
+            border: 0 !important;
+            border-bottom: 1px solid white !important;
+            border-radius: 0 !important;
+            text-decoration: none !important;
+            background: transparent !important;
+            color: black !important;
+        }
+        .form-control2{
+            color: white;
             font-family: arial;
         }
 
