@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -70,6 +70,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
+  
         if (isset($data['user_image'])) {
             $userImage = $data['user_image']->store('assets/uploaded_image', 'public');
         } else {

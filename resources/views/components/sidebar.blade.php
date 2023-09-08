@@ -1,5 +1,5 @@
 @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-
+@if(Auth::check())
 <div class="container-fluid">
         <div class="row flex-nowrap ">
             <div class="sidebar mx-auto  bg-primary mt-5" style="position: fixed; height: 100vh; width: 29vh;">
@@ -12,7 +12,7 @@
                                     $user = auth()->user();
                                 @endphp
 
-                                @if ($isAdmin && $user->user_image)
+                                @if (auth()->check() && $isAdmin && $user->user_image)
                                     <img src="{{ asset('assets/uploaded_image/' . $user->user_image) }}" alt="Admin Picture" class="rounded-circle mx-auto ms-2 d-block" width="100" height="100">
                                 @elseif ($isStaff && $user->user_image)
                                     <img src="{{ asset('assets/uploaded_image/' . $user->user_image) }}" alt="Staff Picture" class="rounded-circle mx-auto ms-2 d-block" width="100" height="100">
@@ -22,7 +22,11 @@
                             </li>
 
                             <div class="col mx-auto d-flex justify-content-center align-items-center mt-3">
+                                @if ($isAdmin)
                                 <span >Welcome <span class="text-warning font-weight-bold text-decoration-underline">{{$user->role }}</span></span>
+                                @elseif ($isStaff)
+                                <span >Welcome <span class="text-warning font-weight-bold text-decoration-underline">{{$user->role }}</span></span>
+                                @endif
                             </div>
                             <br>
 
@@ -174,3 +178,9 @@
             reports.addEventListener('click', handleNavigationItemClick);
             yearbook.addEventListener('click', handleNavigationItemClick);
     </script>
+
+    @else
+    <script>
+        window.location="{{ route('admin-login')}}"
+    </script>
+    @endif

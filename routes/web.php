@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\yearbookController;
-use App\Http\Controllers\StaffRegistrationController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\StaffManagementController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,31 +46,9 @@ Route::get('/alumni', function () {
     return view('yearbook_pages.alumni');
 })->name('alumni');
 
-Route::get('/', [yearbookController::class, 'staff']);
-Route::post('/store', [yearbookController::class, 'store'])->name('store');
-Route::get('/fetchall', [yearbookController::class, 'fetchAll'])->name('fetchAll');
-Route::delete('/delete', [yearbookController::class, 'delete'])->name('delete');
-Route::get('/edit', [yearbookController::class, 'edit'])->name('edit');
-Route::post('/update', [yearbookController::class, 'update'])->name('update');
+Route::post('/staff/registration', [StaffManagementController::class, 'createStaff'])->name('staff.register');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Route::resource('login', loginController::class);
 
 Route::get('login', function () {
     return view('login');
@@ -80,8 +59,7 @@ Route::get('/logout', function () {
 })->name('logout');
 
 
-
-// Route::post('/staff/register', [StaffRegistrationController::class, 'create'])->name('staff.register');
+//  Route::post('/staff/register', [RegisterController::class, 'create'])->name('staff.register');
 
 
 Auth::routes();
