@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('guest');
     }
 
     /**
@@ -50,6 +50,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'user_id'=>['required', 'max:11'],
             'user_image' => ['required', 'image'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
@@ -78,6 +79,7 @@ class RegisterController extends Controller
         }
 
         return User::create([
+            'user_id' => $data['user_id'],
             'user_image' => $userImage,
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],

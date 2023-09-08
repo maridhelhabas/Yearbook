@@ -1,3 +1,4 @@
+@if(Auth::check())
 <html>
 <head>
     <meta charset="utf-8">
@@ -29,3 +30,8 @@
 </html>
 
 
+@else
+<script>
+    window.location="{{ route('admin-login')}}"
+</script>
+@endif

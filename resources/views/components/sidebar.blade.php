@@ -1,5 +1,4 @@
 @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-@if(Auth::check())
 <div class="container-fluid">
         <div class="row flex-nowrap ">
             <div class="sidebar mx-auto  bg-primary mt-5" style="position: fixed; height: 100vh; width: 29vh;">
@@ -37,7 +36,7 @@
                                 <hr>
 
                                     <li id="toggleTitle"  class=" text-white btn nav-link btn-outline-warning text-start dropdown-toggle" ><i class="fa-solid fa-address-card"></i> &nbsp;Registration </li>
-                                    <li class=" projects  {{ request()->is('registration*') ? 'active' : '' }} projectsClass" id="registration"><a href="{{ route('staff') }}" class=" p3 text-start nav-link text-white btn btn-outline-info px-4 "><i class="fa-solid fa-user-group"></i> &nbsp;Staff</a></li>
+                                    <li class=" projects  {{ request()->is('registration*') ? 'active' : '' }} projectsClass" id="registration"><a href="{{ route('staff.index') }}" class=" p3 text-start nav-link text-white btn btn-outline-info px-4 "><i class="fa-solid fa-user-group"></i> &nbsp;Staff</a></li>
                                     <li class="projects projectsClass"><a href="{{ route('alumni') }}" class="p3 text-start nav-link text-white btn btn-outline-info px-4"><i class="fa-solid fa-user-group"></i> &nbsp; Alumnus</a></li>
                            
 
@@ -55,39 +54,29 @@
                                     <a href="{{ route('reports') }}" class="text-start nav-link text-white btn btn-outline-warning align-center"><i class="fa-regular fa-file-lines" style="color: #ffffff;"></i> &nbsp;Reports</a>
                                 </li>
                                 <hr>
-                                
-                       
-                              <li class=" nav-item">
-                                <div class="dropdown">                
-                                        <a href="#" class="dropdown text-white  d-flex align-items-center dropdown-toggle text-start nav-link btn btn-outline-dark px-3 align-center" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">                 
-                                        <i class="fa-solid fa-user-gear" style="color: #ffffff;"></i>&nbsp;{{ __(' Settings') }}</a>
-                                        </a>
-                                        <hr>          
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                                    onclick="event.preventDefault();
-                                                                    document.getElementById('logout-form').submit();">
-                                                        <i class="fa-solid fa-user-large fa-lg" style="color: #ffae00;"></i> {{ __('User Profile') }}
-                                                    </a>
-                                            <hr>
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
-                                                <i class="fa-solid fa-right-from-bracket fa-lg" style="color: #ffbb00;"></i> {{ __('Logout') }}
+                                <li class=" nav-item">
+                                    <div class="dropdown">                
+                                            <a href="#" class="dropdown text-white  d-flex align-items-center dropdown-toggle text-start nav-link btn btn-outline-dark px-3 align-center" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">                 
+                                            <i class="fa-solid fa-user-gear" style="color: #ffffff;"></i>&nbsp;{{ __(' Settings') }}</a>
                                             </a>
-                                   
-
-
-
-
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                @csrf
-                                            </form>
-
-
+                                            <hr>          
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                                        <a class="dropdown-item" href="{{ route('user.profile') }}">
+                                                            <i class="fa-solid fa-user-large fa-lg" style="color: #ffae00;"></i> {{ __('User Profile') }}
+                                                        </a>
+                                                <hr>
+                                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();">
+                                                    <i class="fa-solid fa-right-from-bracket fa-lg" style="color: #ffbb00;"></i> {{ __('Logout') }}
+                                                </a>
+                                    
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                                </form>
+                                        </div>
                                     </div>
-                                </div>
-</li>
+                                </li>
                             </div>
                         </ul>
                     </div>
@@ -179,8 +168,3 @@
             yearbook.addEventListener('click', handleNavigationItemClick);
     </script>
 
-    @else
-    <script>
-        window.location="{{ route('admin-login')}}"
-    </script>
-    @endif

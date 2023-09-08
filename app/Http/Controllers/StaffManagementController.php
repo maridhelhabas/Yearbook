@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateUserRequest;
 
 class StaffManagementController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
     protected function createStaff(CreateUserRequest $request)
     {
         // Validate the incoming data
@@ -43,5 +48,19 @@ class StaffManagementController extends Controller
 
         return redirect()->route('staff')->with('success', 'Staff created successfully.');
     }
+
+
+        public function index()
+        {
+            // Check if the currently authenticated user has the 'Administrator' role
+            if (auth::check() && auth::user()->role === 'Staff') {
+                $dataUser = User::all();
+                session(['dataUser' => $dataUser]); // Set the 'dataUser' session variable
+                return view('yearbook_pages.staff', ['dataUser' => $dataUser]);
+            } else {
+                return view('yearbook_pages.staff'); // Return the view without setting the session variable
+            }
+        }
+    
 
 }

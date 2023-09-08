@@ -33,6 +33,20 @@
                 </div>
 
 
+                <div class="row mb-3">
+                            <label for="user_id" class="col-md-4 col-form-label text-md-end">{{ __('User ID') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="user_id" type="number" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autocomplete="User ID" autofocus>
+
+                                @error('user_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row mb-3">
                             <label for="first_name" class="col-md-4 col-form-label text-md-end">{{ __(' First Name') }}</label>
 

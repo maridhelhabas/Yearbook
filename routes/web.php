@@ -5,61 +5,40 @@ use App\Http\Controllers\loginController;
 use App\Http\Controllers\yearbookController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\StaffManagementController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\RouteController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/admin-login', function () {
-    return view('yearbook_pages.index');
-});
-Route::post('/admin-login',[loginController::class, 'login']);
 
-Route::get('/staff-login', function () {
-    return view('yearbook_pages.index');
-});
-
-Route::get('/dashboard', function () {
-    return view('yearbook_pages.dashboard');
-})->name('dashboard');
-
-Route::get('/registration', function () {
-    return view('yearbook_pages.registration');
-})->name('registration');
-
-Route::get('/reports', function () {
-    return view('yearbook_pages.reports');
-})->name('reports');
-
-Route::get('/upload', function () {
-    return view('yearbook_pages.upload');
-})->name('upload');
-
-Route::get('/template', function () {
-    return view('yearbook_pages.template');
-})->name('template');
-
-Route::get('/staff', function () {
-    return view('yearbook_pages.staff');
-})->name('staff');
-
-Route::get('/alumni', function () {
-    return view('yearbook_pages.alumni');
-})->name('alumni');
-
-Route::post('/staff/registration', [StaffManagementController::class, 'createStaff'])->name('staff.register');
-
-
-
-Route::get('login', function () {
-    return view('login');
+Route::middleware(['web'])->group(function () {
+    Route::controller(RouteController::class)->group(function () {
+        Route::get('/admin-login', 'AdminLogin')->name('admin-login');
+        Route::get('/dashboard', 'dashboardBlade')->name('dashboard');
+        Route::get('/alumni', 'alumniBlade')->name('alumni');
+        Route::get('/template', 'templateBlade')->name('template');
+        Route::get('/reports', 'reportBlade')->name('reports');
+        Route::get('/user_profile', 'userProfileBlade')->name('user.profile');
+    });
 });
 
-Route::get('/logout', function () {
-    return view('yearbook_pages.index');
-})->name('logout');
+// Route::middleware(['web'])->group(function () {
+//     Route::controller(StaffManagementController::class)->group(function () {
+//         Route::get('/staff', 'index')->name('staff');
+//         Route::post('/staff/registration', 'createStaff')->name('staff.register');
+//     });
+// });
 
-
-//  Route::post('/staff/register', [RegisterController::class, 'create'])->name('staff.register');
+Route::resource('staff', StaffController::class)->names([
+    'index' => 'staff.index',
+    'create' => 'staff.create',
+    'store' => 'staff.store',
+    'show' => 'admin.staff.show',
+    'edit' => 'admin.staff.edit',
+    'update' => 'admin.staff.update',
+    'destroy' => 'admin.staff.destroy',
+]);
 
 
 Auth::routes();

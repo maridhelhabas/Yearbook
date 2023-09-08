@@ -162,3 +162,10 @@
       border: 0;
       color: white;
     }
+
+
+        /* Apply CSS styles for fading */
+        #success-alert {
+            opacity: 1;
+            transition: opacity 1s;
+        }
