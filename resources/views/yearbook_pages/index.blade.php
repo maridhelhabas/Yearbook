@@ -19,13 +19,13 @@
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
-        
+       
 
     </style>
 </head>
 <body style="background-image: url('{{ asset('assets/image/loginformbg.png') }}');">
     <div>
-         <div class="navbar navbar-expand-md navbar-light bg-transparent shadow-sm">
+        <div class="navbar navbar-expand-md navbar-light bg-transparent shadow-sm">
             <div>
                 <img src="{{ asset('assets/image/ceclogo.png')}}" class="container rounded mx-auto d-inline-block float-left" alt="hugenerd" width="80" height="80">            
             </div>
@@ -33,16 +33,18 @@
                 <p class="display-5 text-warning font-weight-bolder ">  |</p>
                 
                 <p class="p2">Cristal e-College Interactive Digital Yearbook</p>
-</div>  
+        </div>  
     </div> 
           
- <br><br>
+ <br><br><br><br><br></br>
 <div class="container" >
     <div class="row justify-content-center mt-1">
         <div class="col-sm-9 col-md-7 col-lg-5 mt-1">
             <div class="border-primary card mt-2"> 
                 <img class="rounded-circle float-center mx-auto mt-5" src="{{ asset('assets/image/ceclogo.png')}}" width="100px"  height="100px"/>
                     <h2 class="p1 text-primary font-weight-bolder card-title mx-auto mt-1"><b>LOGIN<b></h2>
+                    
+
                     <br>
                 <div class="card-body mb-5 mt-2">
                     @if(session()->has('login_errors'))
@@ -97,7 +99,7 @@
     </div>
 </div><br>
 
-
+<br><br><br><br><br></br>
 <footer class="footer mt-5 py-1 bg-primary text-white" >
     <div class="container">
         <div class="row mt-2"  style="margin-top:10px !important">

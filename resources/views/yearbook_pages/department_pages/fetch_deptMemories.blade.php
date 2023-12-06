@@ -1,0 +1,1 @@
+{{ json_encode($dept_memories) }}

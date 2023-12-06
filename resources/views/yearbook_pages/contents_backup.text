@@ -1,0 +1,1347 @@
+@if(Auth::check())
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Yearbook Content</title>
+    
+    <link rel="icon" href="{{asset('assets/image/ceclogo.png')}}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- <script src="../src/main.js"></script> -->
+    <!-- <script type="text/javascript"></script> -->
+ 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+   <!-- Include Tooltipster library and CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tooltipster/dist/css/tooltipster.bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/tooltipster/dist/js/tooltipster.bundle.min.js"></script>
+
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+   <style>
+
+/* .book {
+    width: 600px;
+    height: 650px;
+    position: relative;
+    transition-duration: 1s;
+    perspective: 1500;
+}
+input {
+    display: none;
+}
+.cover, .back-cover {
+    background-color:darkblue;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 0 0 5px rgb(41, 41, 41);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center left;
+}
+.cover {
+    position: absolute;
+    z-index: 4;
+    transition: transform 1s;
+}
+.cover label {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.back-cover {
+    position: relative;
+    z-index: -1;
+}
+.page{
+    position: fixed;
+    background-image: linear-gradient(#FF00FF, #9400D3, #4B0082);
+    background-size: cover;
+    width: 590px;
+    height: 630px;
+    border-radius: 0 15px 15px 0;
+    margin-top: 10px;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition-duration: 1.5s;
+}
+.page img {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px 0 0 15px;
+}
+.front-page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    padding: 1rem;
+}
+.back-page {
+    transform: rotateY(180deg);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    z-index: 99;
+}
+.next, .prev {
+    position: absolute;
+    bottom: 1em;
+    cursor: pointer;
+}
+.next {
+    right: -50px;
+   
+    
+}
+.prev {
+    left: 1em;
+}
+#page1 {
+    z-index: 3;
+}
+#page2 {
+    z-index: 2;
+}
+#page3 {
+    z-index: 1;
+}
+#checkbox-cover:checked ~ .book {
+    transform: translateX(200px);
+}
+#checkbox-cover:checked ~ .book .cover {
+    transition: transform 1.5s, z-index 0.5s 0.5s;
+    transform: rotateY(-180deg);
+    z-index: 1;
+}
+#checkbox-cover:checked ~ .book .page {
+    box-shadow: 0 0 3px rgb(99, 98, 98);
+}
+#checkbox-page1:checked ~ .book #page1 {
+    transform: rotateY(-180deg);
+    z-index: 2;
+}
+#checkbox-page2:checked ~ .book #page2 {
+    transform: rotateY(-180deg);
+    z-index: 3;
+}
+
+/*edit text*/
+
+.suggestion:hover{
+    color:red;
+}
+  #search-suggestions {
+        position: absolute;
+        display: none;
+        border: 1px solid #ccc;
+        max-height: 100px; /* Adjust the max height to control the size */
+        overflow-y: auto;
+        background-color: white;
+        width: calc(25.2% - 2px); /* Adjust the width */
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        border-radius: 4px; /* Rounded corners */
+        z-index: 1; /* Ensure it appears above other content */
+    }
+
+    #suggestion-list {
+        list-style-type: none;
+        padding: 1px;
+        margin: 0;
+        cursor: pointer !important;
+    }
+
+    #suggestion-list li {
+        padding: 5px 10px; /* Adjust the padding */
+        cursor: pointer !important;
+    }
+
+    #suggestion-list li:hover {
+        background-color: #f5f5f5;
+        cursor:pointer !important;
+    }
+
+      .headline {
+        font-size: 2em;
+        text-align: center;
+      }
+
+   
+
+      button {
+        border: none;
+        padding: 0.8em;
+        background: #f96;
+        border-radius: 3px;
+        color: white;
+        font-weight: bold;
+        margin: 0 0 1em;
+      }
+
+      button:hover,
+      button:focus {
+        cursor: pointer;
+        outline: none;
+      }
+
+      #editor {
+        padding: 1em;
+        color: white;
+        border-radius: 3px;
+      }
+    
+    /*image display*/
+     .drop-zone {
+	max-width: 150px;
+	height: 150px;
+	padding: 25px;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-family: "Quicksand", sans-serif;
+	font-weight: 500;
+	font-size: 12px;
+	cursor: pointer;
+	color: #cccccc;
+    
+	
+}
+
+.drop-zone--over {
+	border-style: solid;
+}
+
+.drop-zone__input {
+	display: none;
+}
+
+.drop-zone__thumb {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: #cccccc;
+	background-size: cover;
+	position: relative;
+}
+
+/* Book */
+.book {
+    position: relative;
+    width: 700px;
+    height: 800px;
+    transition-duration: 1s;
+    perspective: 1500;
+    
+}
+
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    perspective: 1500px;
+    transition-duration: 1.5s;
+   
+
+}
+
+.front,
+.back {
+    background-image: url('{{ asset('assets/image/temp2.png') }}');
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transition: transform 0.5s;
+}
+
+.front {
+    z-index: 1;
+    backface-visibility: hidden;
+    border-left: 3px solid powderblue;
+}
+
+.back {
+    z-index: 0;
+}
+
+.front-content,
+.back-content {
+    color:white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-content {
+    transform: rotateY(180deg)
+}
+
+/* Paper flip effect */
+.flipped .front,
+.flipped .back {
+    transform: rotateY(-180deg);
+}
+
+/* Controller Buttons */
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin: 10px;
+    transition: transform 0.5s;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover i {
+    color: #636363;
+}
+
+
+
+/* Paper stack order */
+#p1 {
+    z-index: 3;
+}
+
+#p2 {
+    z-index: 2;
+}
+
+#p3 {
+    z-index: 1;
+}
+
+</style>
+
+ </head>
+ 
+<body class="dash-blade">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12 margin-tb" style="font-family:georgia;">
+                    <h2>
+                        <b>
+                            <i class="fa-solid fa-book-open-reader fa-lg" style="color: #082f72;"></i>YEARBOOK
+                            <hr>
+                        </b>
+                     </h2>
+            </div>
+   
+                <!-- </div> 
+                  <button class="btn btn-warning text-white" style="z-index:1;float:left;margin-left: 1050px;margin-top:-70px;" data-bs-toggle="modal" data-bs-target="#addstaffModal"><i
+                  class="fa fa-circle-plus"></i> Create Account</button>
+            </div> -->
+            <div>
+            <div class="card-body" id="show_all_staff">
+              
+              @if (session('success'))
+                  <div class="alert alert-success fadeout" id="fade">
+                      <p class="">{{ session('success') }}</p>
+                  </div>
+              @endif
+            </div>
+                             
+                    <div class="text-right mb-2" style="z-index:1;float:right;margin-left: 180px;margin-top:-70px;">
+                        <a class="btn btn-success" href="#">Publish</a>
+                    </div> 
+                         
+                <div class="text-right">
+                    <a class="btn btn-info" enctype="multipart/form-data" href="{{ route('yearbook') }}">
+                        <i class="fa-solid fa-arrow-left fa-beat" style="color: #ffffff;"></i>
+                        </a>
+                </div> 
+            <!-- <div id="toolbar" style="z-index:1;float:right;margin-top:-25px;">
+                <button id="editBtn" type="button" class="btn btn-warning text-white"> Edit </button>
+            </div>   -->
+     {{-- add new employee modal start --}}
+<div class="container max-1920">
+    <div class="row pt-3">
+      
+        <form id="patient_form">
+        <div class="form-group">
+            <h3>CREATE YEARBOOK</h3>
+            <div class="row">
+                <div class="col">
+                    <input id="search-input" type="text" class="form-control" placeholder="Search By Names or ID" autofocus required style="cursor:type;color:black"/>
+                    <div class="" id="search-suggestions"></div>
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+        </div>
+
+
+        <div class="form-group mt-4">
+            <div class="row">
+                <label for="" class="text-dark mb-2" ><h5>Displayed Alumni: </h5></label>
+                 <div class="col">
+                     <label for="fullname" class="text-dark">{{ __('Fullname') }}</label>
+                    <input readonly id="fullname" type="text" class="form-control" placeholder="Fullname" style="cursor:pointer" disabled/>
+                </div>
+                 <div class="col">
+                    <label for="parent" class="text-dark">{{ __('Parent') }}</label>
+                    <input readonly id="parent" type="text" class="form-control" placeholder="Parent" disabled/>
+                </div>
+                <div class="col">
+                    <label for="address" class="text-dark">{{ __('Address') }}</label>
+                    <input readonly id="address" type="text" class="form-control" placeholder="Address" disabled/>
+                </div>
+                <div class="col">
+                    <label for="birthday" class="text-dark">{{ __('Birthday') }}</label>
+                    <input readonly id="birthdate" type="text" class="form-control" placeholder="Birthday" disabled/>
+                </div>
+                <div class="col">
+                    <label for="motto" class="text-dark">{{ __('Motto') }}</label>
+                    <input readonly id="motto" type="text" class="form-control" placeholder="Motto" disabled/>
+                </div>
+                <div class="col">
+                    <label for="class_year" class="text-dark">{{ __('Class Year') }}</label>
+                    <input readonly id="class_year" type="number" class="form-control" placeholder="class year" disabled/>
+                </div>
+                 <div class="col">
+                    <label for="department" class="text-dark">{{ __('Department') }}</label>
+                    <input readonly id="department" type="text" class="form-control" placeholder="department" disabled/>
+                </div>
+            </div>
+        </div>
+    </form> 
+
+       
+
+
+    </div>
+
+{{-- add new staff modal end --}}
+<form id="form-0" class="data-form submit-form">
+     <div class="form-group mt-4">
+
+            <button class="btn btn-primary">Save Changes</button>
+            <button type="submit" class="btn btn-success" id="reset_form">Reset Search</button>
+        </div>
+    <div class="col-md-9 mt-5">
+        <div class="content" style="margin-left: 30%;margin-top: 20px;"> 
+        
+         <!-- Previous Button -->
+            <button id="prev-btn" style="float:left;margin-left:-33%;margin-top:365px;">
+                <i class="fa-solid fa-chevron-left fa-2xl" style="color: #103370;"></i>
+            </button>
+
+            <!-- Book -->
+            <div id="book" class="book">
+                <!-- Paper 1 -->
+               
+                <div id="p1" class="paper">
+                    
+                    <div class="front text-white">
+                        <div class="text-center mb-2">
+                            <img id="image_preview2" src="{{ asset('assets/image/user_thumbnail.png')}}" alt="Image Preview" style="border-radius:150px;max-width: 150px; max-height: 150px;">
+                        </div>
+                    
+                        <div class="row mb-3">
+                            <div class="col text-center">
+                                    <input id="user_image2" type="file" style="display: none;" class="form-control @error('user_image2') is-invalid @enderror" name="user_image" accept="image/*" required>
+                                    <input type="text" id="user_image_fake_input" class="form-control form-control2" placeholder="Select Image" readonly style="display:none" required>
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('user_image2').click();">Upload Image</button>
+                                @error('user_image2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                
+                                Name: <p class="" id="fullname1"></p>
+                            </div>
+
+                            <div class="col-sm-5">
+                                Parent: <p class="" id="parent1"></p>
+                            </div>
+
+                            <div class="col-sm-5">
+                                Address: <p class="" id="address1"></p>
+                            </div>
+                        </div>
+
+                        <div class="text-center mb-2">
+                            <img id="image_preview2" src="{{ asset('assets/image/user_thumbnail.png')}}" alt="Image Preview" style="border-radius:150px;max-width: 150px; max-height: 150px;">
+                        </div>
+                    
+                        <div class="row mb-3">
+                            <div class="col text-center">
+                                    <input id="user_image2" type="file" style="display: none;" class="form-control @error('user_image2') is-invalid @enderror" name="user_image" accept="image/*" required>
+                                    <input type="text" id="user_image_fake_input" class="form-control form-control2" placeholder="Select Image" readonly style="display:none" required>
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('user_image2').click();">Upload Image</button>
+                                @error('user_image2')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="user_id" class="text-white">{{ __('School ID') }}<span class="text-danger">*</span></label>
+                            <input type="text" name="user_id" class="form-control form-control2 @error('user_id') is-invalid @enderror" placeholder="Name" id="user_id"  required>
+                            @error('user_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                    </div>
+                    <div class="back">
+                        <div id="b1" class="back-content">
+                            <h1>Back 1</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paper 2 -->
+                <div id="p2" class="paper">
+                    <div class="front">
+                        <div class="drop-zone" style="margin-left: 5%; margin-top: 5%;">
+                            <span class="drop-zone__prompt">Upload Image</span>
+                            <input type="file" name="myFile" class="drop-zone__input" required>
+                            <br>
+                            
+                        </div>
+                        <div id="f2" class="front-content">
+                            <h1>Front 2</h1>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div id="b2" class="back-content">
+                            <h1>Back 2</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paper 3 -->
+                <div id="p3" class="paper">
+                    <div class="front">
+                        <div id="f3" class="front-content">
+                            <h1>Front 3</h1>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <div id="b3" class="back-content">
+                            <h1>Back 3</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Next Button -->
+                    <button id="next-btn" style="z-index:1;float:left;margin-left: 132%;margin-top:-62%;">
+                        <i class="fa-solid fa-chevron-right fa-2xl" style="color: #103370;"></i>
+                    </button>
+                    <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br>
+</form>  
+
+<footer class="footer mt-5 py-1 bg-primary text-white" >
+    <div class="container">
+        <div class="row mt-2"  style="margin-top:10px !important">
+            <div class="col-md-8 mb-0 text-white">
+                © A Capstone Project Developed by <a style="color:#85d8ff" href="https://sites.google.com/view/apexyearbook">Apex</a>
+            
+            <ul class="nav col-md-3 justify-content-end mb-1">
+                <li class="nav-item"> <i class="fa fa-envelope-o" aria-hidden="true"></i> Have any concerns? Contact us: <span style="color:#85d8ff">cec.edu.ph</span> </li>
+            </ul>
+            </div>
+        </div>
+    </div>
+</footer> 
+
+
+    <!-- <input type="checkbox" id="checkbox-cover">
+    <input type="checkbox" id="checkbox-page1">
+    <input type="checkbox" id="checkbox-page2">
+    <input type="checkbox" id="checkbox-page3">
+    <div class="book">
+        <div class="cover">
+            <label for="checkbox-cover"></label>
+        </div>
+        
+        <div class="page" id="page1">
+            <div class="front-page">
+                <div id="editor">
+                <div class="drop-zone" style="margin-left: 5%; margin-top:5%;">
+		            <span class="drop-zone__prompt">click image to upload</span>
+		            <input type="file" name="myFile" class="drop-zone__input">
+            </div>           
+                <div id="editDocument">
+                    <p id="title" style="text-color: white; margin-left: 50%;  margin-top:-30%;">Name</p>
+                    <p id="author" style="margin-left: 50%;">Parent</p>
+                    <p id="content" style="margin-left: 50%;">Address </p>
+                </div>
+
+            </div>        
+                <label class="next"  style="margin-left: 45%;margin-top: -50px;" for="checkbox-page1"><i class="fas fa-chevron-right"></i></label>
+            </div>
+            <div class="back-page">
+                <div id="editor">
+                <div class="drop-zone" style="margin-left: 5%; margin-top:5%;">
+		            <span class="drop-zone__prompt">click image to upload</span>
+		            <input type="file" name="myFile" class="drop-zone__input">
+            </div>           
+
+
+                <div class="drop-zone" style="margin-left: 5%; margin-top: 15%;">
+		            <span class="drop-zone__prompt">click image to upload</span>
+		            <input type="file" name="myFile" class="drop-zone__input">
+            </div>           
+     
+            </div>        
+                <label class="prev" for="checkbox-page1"><i class="fas fa-chevron-left"></i></label>
+            </div>
+        </div>
+        <div class="page" id="page2">
+            <div class="front-page">
+                <div id="editor">
+                <div class="drop-zone" style="margin-left: 5%; margin-top:5%;">
+		            <span class="drop-zone__prompt">Upload Ima</span>
+		            <input type="file" name="myFile" class="drop-zone__input">
+            </div>           
+                <h5 id="name" style="margin-left: 50%; margin-top:-35%;">Name</h5>
+                <p id="parent" style="margin-left: 50%;">Parent's Name</p>
+                <p id="address" style="margin-left: 50%;">Address</p>
+                <p id="birthday" style="margin-left: 50%;">Birthday</p>
+                <p id="motto" style="margin-left: 50%;">Motto</p>
+
+                <div class="drop-zone" style="margin-left: 5%; margin-top: 15%;">
+		            <span class="drop-zone__prompt">click image to upload</span>
+		            <input type="file" name="myFile" class="drop-zone__input">
+            </div>           
+                <h5 id="name" style="margin-left: 50%; margin-top:-30%;">Name</h5>
+                <p id="parent" style="margin-left: 50%;">Parent's Name</p>
+                <p id="address" style="margin-left: 50%;">Address</p>
+                <p id="birthday" style="margin-left: 50%;">Birthday</p>
+                <p id="motto" style="margin-left: 50%;">Motto</p>
+            </div>        
+                <label class="next" for="checkbox-page2"><i class="fas fa-chevron-right"></i></label>
+            </div>
+            <div class="back-page">
+                 <div id="editor">
+                <div class="drop-zone" style="margin-left: 5%; margin-top:5%;">
+		            <span class="drop-zone__prompt">click image to upload</span>
+		            <input type="file" name="myFile" class="drop-zone__input">
+            </div>           
+                <h5 id="name" style="margin-left: 50%; margin-top:-35%;">Name</h5>
+                <p id="parent" style="margin-left: 50%;">Parent's Name</p>
+                <p id="address" style="margin-left: 50%;">Address</p>
+                <p id="birthday" style="margin-left: 50%;">Birthday</p>
+                <p id="motto" style="margin-left: 50%;">Motto</p>
+
+                <div class="drop-zone" style="margin-left: 5%; margin-top: 15%;">
+		            <span class="drop-zone__prompt">click image to upload</span>
+		            <input type="file" name="myFile" class="drop-zone__input">
+            </div>           
+                <h5 id="name" style="margin-left: 50%; margin-top:-30%;">Name</h5>
+                <p id="parent" style="margin-left: 50%;">Parent's Name</p>
+                <p id="address" style="margin-left: 50%;">Address</p>
+                <p id="birthday" style="margin-left: 50%;">Birthday</p>
+                <p id="motto" style="margin-left: 50%;">Motto</p>
+            </div>        
+                <label class="prev" for="checkbox-page2"><i class="fas fa-chevron-left"></i></label>
+            </div>
+        </div>
+        <div class="page" id="page3">
+            <div class="front-page">
+                <h2>Page 3</h2>
+                <p>Christine villaber gwapa</p>
+            </div>
+        </div>
+        <div class="back-cover"></div> -->
+
+  <!-- <script>
+    const editBtn = document.getElementById('editBtn');
+const editables = document.querySelectorAll('#title, #author, #content');
+
+if (typeof(Storage) !== "undefined") {
+  if (localStorage.getItem('fullname') !== null) {
+    editables[0].innerHTML = localStorage.getItem('title');
+  }
+//   if (localStorage.getItem('author') !== null) {
+//     editables[1].innerHTML = localStorage.getItem('author');
+//   }
+//   if (localStorage.getItem('content') !== null) {
+//     editables[2].innerHTML = localStorage.getItem('content');
+//   }
+}
+
+editBtn.addEventListener('click', function(e) {
+  if (!editables[0].isContentEditable) {
+    editables[0].contentEditable = 'true';
+    // editables[1].contentEditable = 'true';
+    // editables[2].contentEditable = 'true';
+    editBtn.innerHTML = 'Save Changes';
+    editBtn.style.backgroundColor = '#6F9';
+  } else {
+    // Disable Editing
+    editables[0].contentEditable = 'false';
+    // editables[1].contentEditable = 'false';
+    // editables[2].contentEditable = 'false';
+    // Change Button Text and Color
+    editBtn.innerHTML = 'Enable Editing';
+    editBtn.style.backgroundColor = '#F96';
+    // Save the data in localStorage 
+    for (var i = 0; i < editables.length; i++) {
+      localStorage.setItem(editables[i].getAttribute('fullname'), editables[i].innerHTML);
+    }
+  }
+});
+   </script> -->
+   
+ <script>
+ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+	const dropZoneElement = inputElement.closest(".drop-zone");
+   
+
+	dropZoneElement.addEventListener("click", (e) => {
+		inputElement.click();
+	});
+
+	inputElement.addEventListener("change", (e) => {
+		if (inputElement.files.length) {
+			updateThumbnail(dropZoneElement, inputElement.files[0]);
+		}
+	});
+
+	dropZoneElement.addEventListener("dragover", (e) => {
+		e.preventDefault();
+		dropZoneElement.classList.add("drop-zone--over");
+	});
+
+	["dragleave", "dragend"].forEach((type) => {
+		dropZoneElement.addEventListener(type, (e) => {
+			dropZoneElement.classList.remove("drop-zone--over");
+		});
+	});
+
+	dropZoneElement.addEventListener("drop", (e) => {
+		e.preventDefault();
+
+		if (e.dataTransfer.files.length) {
+			inputElement.files = e.dataTransfer.files;
+			updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+		}
+
+		dropZoneElement.classList.remove("drop-zone--over");
+	});
+});
+
+/**
+ * Updates the thumbnail on a drop zone element.
+ *
+ * @param {HTMLElement} dropZoneElement
+ * @param {File} file
+ */
+function updateThumbnail(dropZoneElement, file) {
+	let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+	// First time - remove the prompt
+	if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+		dropZoneElement.querySelector(".drop-zone__prompt").remove();
+	}
+
+	// First time - there is no thumbnail element, so lets create it
+	if (!thumbnailElement) {
+		thumbnailElement = document.createElement("div");
+		thumbnailElement.classList.add("drop-zone__thumb");
+		dropZoneElement.appendChild(thumbnailElement);
+	}
+
+	thumbnailElement.dataset.label = file.name;
+
+	// Show thumbnail for image files
+	if (file.type.startsWith("image/")) {
+		const reader = new FileReader();
+
+		reader.readAsDataURL(file);
+		reader.onload = () => {
+			thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+		};
+	} else {
+		thumbnailElement.style.backgroundImage = null;
+	}
+}
+
+</script>   
+
+ <!-- <script>
+$(document).ready(function(){
+   console.log('Hi ready');
+
+   $('#form_rest').click(function(e){
+    e.preventDefault();
+    $('#patient_form')[0].reset();
+   })
+
+   $(function(){
+   $('#user_name').autocomplete({
+
+    source: [{
+      label: "Moses Noel",
+      fullname:"Moses Noel",
+      parent: "papa bars",
+      address: "New York",
+      birthday: "april 24,2004",
+      motto:"Laag everywhere",
+      class_year:"2020",
+      department:"BSBA"
+    }, {
+      label: "Travis Jordan Scott",
+      fullname:"Travis Jordan Scott",
+      parent: "papa bars",
+      address: "New York",
+      birthday: "april 24,2004",
+      motto:"Laag everywhere",
+      class_year:"2021",
+      department:"BSHM"
+    },{
+      label: "Mike Jordan",
+      fullname: "Mike Jordan",
+      parent: "papa bars",
+      address: "New York",
+      birthday: "april 24,2004",
+      motto:"Laag everywhere",
+      class_year:"2022",
+      department:"BSED"
+    },{
+      label: "Ava Sarah Max",
+      fullname: "Ava Sarah Max",
+      parent: "papa bars",
+      address: "New York",
+      birthday: "april 24,2004",
+      motto:"Laag everywhere",
+      class_year:"2023",
+      department:"BSIT"
+    }],
+
+    select: function(e, ui){
+        $('#user_name').val(ui.item.label);
+
+        $('#fullname').val(ui.item.fullname);
+        $('#parent').val(ui.item.parent);
+        $('#address').val(ui.item.address);
+        $('#birthday').val(ui.item.birthday);
+        $('#motto').val(ui.item.motto);
+        $('#class_year').val(ui.item.class_year);
+        $('#department').val(ui.item.department);
+
+
+        return false;
+
+
+
+    }
+
+   });
+   });
+
+    });
+</script>  -->
+
+<!-- <script>
+$(document).ready(function() {
+    $('#user_name').on('input', function() {
+        var query = $(this).val();
+        
+        $.ajax({
+            url: "{{ route('contents') }}",
+            method: 'GET',
+            data: { query: query },
+            dataType: 'json',
+            success: function(data) {
+                if (data.length > 0) {
+                    var selectedUser = data[0];
+                    $('#fullname').val(selectedUser.fullname);
+                    $('#birthdate').val(selectedUser.birthdate);
+                    $('#address').val(selectedUser.address);
+                    $('#parents_name').val(selectedUser.parents_name);
+                    $('#department_name').val(selectedUser.department_name);
+                    $('#class_year').val(selectedUser.class_year);
+                    $('#motto').val(selectedUser.motto);
+
+                    console.log("Results found!.");
+                } else {
+                    // Clear the input fields if no results found
+                    $('#fullname').val('');
+                    $('#birthdate').val('');
+                    $('#address').val('');
+                    $('#parents_name').val('');
+                    $('#department_name').val('');
+                    $('#class_year').val('');
+                    $('#motto').val('');
+
+                    console.log("No results found. Input fields cleared.");
+                }
+                
+                var results = '';
+                $.each(data, function(index, user) {
+                    // Generate HTML to display the search results
+                    results += '<p><strong>Name:</strong> ' + user.fullname + '<br><strong>Birthdate:</strong> ' + user.birthdate + '<br><strong>Address:</strong> ' + user.address + '<br><strong>Parents Name:</strong> ' + user.parents_name +  '<br><strong>Department Name:</strong> ' + user.department_name + '<br><strong>Class Year:</strong> ' + user.class_year + '<br><strong>Motto:</strong> ' + user.motto +'</p>';
+                });
+                $('#search-results').html(results);
+            },
+
+            error: function(xhr, status, error) {
+                console.log("AJAX request failed: " + status + ", " + error);
+            }
+        });
+    });
+});
+</script> -->
+
+
+
+
+<!-- <input type="text" id="search-input" name="search-input" placeholder="Search">
+<div id="search-suggestions"></div> -->
+
+<!-- 
+<script>
+$(document).ready(function() {
+    var selectedIndex = -1; // Initialize the selected index
+    var suggestionsCount = 0; // Initialize the count of suggestions
+
+    $('#search-input').on('keyup', function(event) {
+        var query = $(this).val();
+        
+        if (query.trim() === '') {
+            // Clear the input fields if the query is empty
+            $('#fullname').val('');
+            $('#birthdate').val('');
+            $('#address').val('');
+            $('#parents_name').val('');
+            $('#department_name').val('');
+            $('#class_year').val('');
+            $('#motto').val('');
+            $('#search-suggestions').hide();
+            return;
+        }
+        
+        $.ajax({
+            url: "{{ route('contents') }}",
+            method: 'POST',
+            data: { query: query, _token: '{{ csrf_token() }}' },
+            dataType: 'json',
+            success: function(data) {
+                var suggestions = '';
+                suggestionsCount = data.length; // Update suggestions count
+
+                if (suggestionsCount > 0) {
+                    $.each(data, function(index, user) {
+                        // Generate HTML for each suggestion
+                        suggestions += '<div class="suggestion">' + user.fullname + '</div>';
+                    });
+                } else {
+                    // No results found: Include a suggestion message
+                    suggestions = '<div class="suggestion">Name not found in the database. Suggestion: Try a different name.</div>';
+                }
+
+                // Update the suggestion list and show the suggestions dropdown
+                $('#search-suggestions').html(suggestions).show();
+
+                // Handle suggestion click event
+                $('.suggestion').click(function() {
+                    var selectedUser = data[$(this).index()];
+                    $('#search-input').val(selectedUser.fullname);
+                    $('#fullname').val(selectedUser.fullname);
+                    $('#birthdate').val(selectedUser.birthdate);
+                    $('#address').val(selectedUser.address);
+                    $('#parents_name').val(selectedUser.parents_name);
+                    $('#department_name').val(selectedUser.department_name);
+                    $('#class_year').val(selectedUser.class_year);
+                    $('#motto').val(selectedUser.motto);
+                    $('#search-suggestions').hide();
+                });
+            },
+
+            error: function(xhr, status, error) {
+                console.log("AJAX request failed: " + status + ", " + error);
+            }
+        });
+    });
+
+    // Handle Enter key press to select suggestion
+    $('#search-input').on('keydown', function(event) {
+        if (event.key === "Enter") {
+            if (selectedIndex >= 0 && selectedIndex < suggestionsCount) {
+                var selectedName = $('#search-suggestions .suggestion').eq(selectedIndex).text();
+                $('#search-input').val(selectedName);
+                $('#search-suggestions').hide();
+                event.preventDefault();
+            }
+        } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            // Handle arrow key navigation
+            if (suggestionsCount > 0) {
+                if (event.key === "ArrowDown") {
+                    // Move down in the list
+                    selectedIndex = (selectedIndex + 1) % suggestionsCount;
+                } else {
+                    // Move up in the list
+                    selectedIndex = (selectedIndex - 1 + suggestionsCount) % suggestionsCount;
+                }
+
+                // Highlight the selected suggestion
+                $('#search-suggestions .suggestion').removeClass('selected');
+                $('#search-suggestions .suggestion').eq(selectedIndex).addClass('selected');
+            }
+        }
+    });
+
+    // Detect clicks on the document to hide suggestions
+    $(document).on('click', function(event) {
+        var $target = $(event.target);
+        if (!$target.is('#search-input') && !$target.is('#search-suggestions')) {
+            $('#search-suggestions').hide();
+        }
+    });
+});
+</script> -->
+
+
+<script>
+$(document).ready(function() {
+    var selectedIndex = -1; // Initialize the selected index
+    var suggestionsCount = 0; // Initialize the count of suggestions
+
+    $('#search-input').on('keyup', function(event) {
+        var query = $(this).val();
+        
+        if (query.trim() === '') {
+            // Clear the input fields if the query is empty
+            $('#fullname').val('');
+            $('#birthdate').val('');
+            $('#address').val('');
+            $('#parent').val('');
+            $('#department').val('');
+            $('#class_year').val('');
+            $('#motto').val('');
+            $('#search-suggestions').hide();
+            return;
+        }
+        
+        $.ajax({
+            url: "{{ route('contents') }}",
+            method: 'POST',
+            data: { query: query, _token: '{{ csrf_token() }}' },
+            dataType: 'json',
+            success: function(data) {
+                var suggestions = '';
+                suggestionsCount = data.length; // Update suggestions count
+
+               if (suggestionsCount > 0) {
+                    $.each(data, function(index, user) {
+                        // Generate HTML for each suggestion with a space between id and fullname
+                        suggestions += '<div class="suggestion" style="cursor:pointer">'+ '&nbsp;&nbsp;' + user.id + '&nbsp; - &nbsp;' + user.fullname + '</div><hr>';
+                    });
+                }
+                else {
+                    // No results found: Include a suggestion message
+                    suggestions = '<div class="suggestion text-warning">Name not found in the database. <br>Suggestion: Try a different name.</div>';
+
+                }
+
+                // Update the suggestion list and show the suggestions dropdown
+                $('#search-suggestions').html(suggestions).show();
+
+                // Handle suggestion click event
+                $('.suggestion').click(function() {
+                    var selectedUser = data[$(this).index()];
+                    $('#fullname').val(selectedUser.fullname);
+                    $('#fullname1').text(selectedUser.fullname);
+                    $('#birthdate').val(selectedUser.birthdate);
+                    $('#birthdate1').text(selectedUser.birthdate);
+                    $('#address').val(selectedUser.address);
+                    $('#address1').text(selectedUser.address);
+                    $('#parent').val(selectedUser.parents_name);
+                    $('#parent1').text(selectedUser.parents_name);
+                    $('#department').val(selectedUser.department_name);
+                    $('#department1').text(selectedUser.department_name);
+                    $('#class_year').val(selectedUser.class_year);
+                    $('#class_year1').text(selectedUser.class_year);
+                    $('#motto').val(selectedUser.motto);
+                    $('#motto1').text(selectedUser.motto);
+                    $('#search-suggestions').hide();
+                });
+            },
+
+            error: function(xhr, status, error) {
+                console.log("AJAX request failed: " + status + ", " + error);
+            }
+        });
+    });
+
+    // Handle Enter key press to select suggestion
+    // Handle arrow key navigation
+// Initialize selectedIndex and suggestionsCount variables
+var selectedIndex = -1;
+var suggestionsCount = 0;
+
+var selectedIndex = -1;
+var suggestionsCount = 0;
+
+$('#search-suggestions').on('keydown', function(event) {
+    var $suggestions = $('#search-suggestions .suggestion');
+
+    // if (event.key === "Enter") {
+    //     if (selectedIndex >= 0 && selectedIndex < suggestionsCount) {
+    //         var selectedName = $suggestions.eq(selectedIndex).text();
+    //         $('#search-input').val(selectedName);
+    //         $('#search-suggestions').hide();
+    //         event.preventDefault();
+    //         var route = "{{ route('contents') }}";
+    //         window.location.href = route + "?selected=" + encodeURIComponent(selectedName);
+    //     }
+    // } else 
+
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        // Handle arrow key navigation
+        suggestionsCount = $suggestions.length;
+
+        if (suggestionsCount > 0) {
+            if (event.key === "ArrowDown") {
+                // Move down in the list
+                selectedIndex = (selectedIndex + 1) % suggestionsCount;
+            } else {
+                // Move up in the list
+                selectedIndex = (selectedIndex - 1 + suggestionsCount) % suggestionsCount;
+            }
+
+            // Highlight the selected suggestion
+            $suggestions.removeClass('selected');
+            $suggestions.eq(selectedIndex).addClass('selected');
+        }
+        event.preventDefault(); // Prevent the default arrow key behavior
+    }
+});
+
+// Prevent the form from submitting when pressing Enter
+$('#search-form').on('submit', function(event) {
+    event.preventDefault();
+});
+
+
+
+
+    // Detect clicks on the document to hide suggestions
+    $(document).on('click', function(event) {
+        var $target = $(event.target);
+        if (!$target.is('#search-input') && !$target.is('#search-suggestions')) {
+            $('#search-suggestions').hide();
+        }
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        // References to DOM Elements
+const prevBtn = document.querySelector("#prev-btn");
+const nextBtn = document.querySelector("#next-btn");
+const book = document.querySelector("#book");
+
+const paper1 = document.querySelector("#p1");
+const paper2 = document.querySelector("#p2");
+const paper3 = document.querySelector("#p3");
+
+// Event Listener
+prevBtn.addEventListener("click", goPrevPage);
+nextBtn.addEventListener("click", goNextPage);
+
+// Business Logic
+let currentLocation = 1;
+let numOfPapers = 3;
+let maxLocation = numOfPapers + 1;
+
+function openBook() {
+    book.style.transform = "translateX(50%)";
+    prevBtn.style.transform = "translateX(-180px)";
+    nextBtn.style.transform = "translateX(180px)";
+}
+
+function closeBook(isAtBeginning) {
+    if(isAtBeginning) {
+        book.style.transform = "translateX(0%)";
+    } else {
+        book.style.transform = "translateX(100%)";
+    }
+    
+    prevBtn.style.transform = "translateX(0px)";
+    nextBtn.style.transform = "translateX(0px)";
+}
+
+function goNextPage() {
+    if(currentLocation < maxLocation) {
+        switch(currentLocation) {
+            case 1:
+                openBook();
+                paper1.classList.add("flipped");
+                paper1.style.zIndex = 1;
+                break;
+            case 2:
+                paper2.classList.add("flipped");
+                paper2.style.zIndex = 2;
+                break;
+            case 3:
+                paper3.classList.add("flipped");
+                paper3.style.zIndex = 3;
+                closeBook(false);
+                break;
+            default:
+                throw new Error("unkown state");
+        }
+        currentLocation++;
+    }
+}
+
+function goPrevPage() {
+    if(currentLocation > 1) {
+        switch(currentLocation) {
+            case 2:
+                closeBook(true);
+                paper1.classList.remove("flipped");
+                paper1.style.zIndex = 3;
+                break;
+            case 3:
+                paper2.classList.remove("flipped");
+                paper2.style.zIndex = 2;
+                break;
+            case 4:
+                openBook();
+                paper3.classList.remove("flipped");
+                paper3.style.zIndex = 1;
+                break;
+            default:
+                throw new Error("unkown state");
+        }
+
+        currentLocation--;
+    }
+}
+    </script>
+
+</body>
+   
+</html>
+
+
+@else
+<script>
+    window.location="{{ route('admin-login')}}"
+</script>
+@endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Dashboard</title>
+    <link rel="icon" href="{{asset('assets/image/ceclogo.png')}}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    
+    
+ </head>
+
+
+<body class=dash-blade>
+ 
+    
+     <div class="container mt-4">
+            <div class="row">
+                <div class="col-lg-12 margin-tb">
+                    <div class="text-center">
+                        <h2>
+                            <b>
+                                CREATE CONTENT
+                            </b>
+                        </h2>
+                    </div>
+                    <div class="text-right">
+                        <a class="btn btn-info" enctype="multipart/form-data" href="{{ route('yearbook') }}">
+                            <i class="fa-solid fa-arrow-left fa-beat" style="color: #ffffff;">
+                            </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+</body>
+   
+</html> -->

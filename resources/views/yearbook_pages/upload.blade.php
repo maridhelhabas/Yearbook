@@ -14,8 +14,7 @@
 
 
 <body>
-    @include('components/nav')
-    @include('components/sidebar')
+   
     
     <div class="col-md-9 mt-5" style="z-index:1;float:left">
                 <div class="content" style="margin-left: 24%;margin-top:5%;">
